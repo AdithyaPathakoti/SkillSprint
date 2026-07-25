@@ -1,0 +1,71 @@
+.particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+}
+
+.particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  animation: float ease-in-out infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+@keyframes float {
+  0% {
+    transform: 
+      translate3d(0, 0, 0) 
+      rotate(0deg) 
+      scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: 
+      translate3d(var(--travel-x), var(--travel-y), 0) 
+      rotate(var(--rotate)) 
+      scale(1.2);
+  }
+  100% {
+    transform: 
+      translate3d(calc(var(--travel-x) * 2), calc(var(--travel-y) * 2), 0) 
+      rotate(calc(var(--rotate) * 2)) 
+      scale(1);
+    opacity: 0;
+  }
+}
+
+/* Optional: Add twinkling effect for some particles */
+.particle:nth-child(3n) {
+  animation: float ease-in-out infinite, twinkle 4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+/* Add depth with pseudo-elements */
+.particle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border-radius: inherit;
+  filter: blur(2px);
+  z-index: -1;
+}
